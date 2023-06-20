@@ -33,7 +33,6 @@ class Model extends Db
 
         // On transforme le tableau en chaîne de caractère
         $list_fields = implode(' AND ', $fields);
-        var_dump($list_fields);
 
         $sql = "SELECT * FROM {$this->table} WHERE {$list_fields}";
         return $this->request($sql, $values)->fetchAll();
@@ -59,5 +58,68 @@ class Model extends Db
     public function findById(int $id)
     {
         return $this->request("SELECT * FROM {$this->table} WHERE id = ?", [$id])->fetch();
+    }
+
+    public function create($model)
+    {
+        $fields = [];
+        $splits = [];
+        $values = [];
+
+        foreach ($model as $field => $value)
+        {
+            if ($value !== null && $field !== "db" && $field !== "table")
+            {
+                $fields[] = $field;
+                $splits[] = "?";
+                $values[] = $value;
+            }
+        }
+
+        // On transforme le tableau en chaine de caractères
+        $list_fields = implode(", ", $fields);
+        $list_splits = implode(", ", $splits);
+
+        echo "Valeur ajoutée !";
+
+        return $this->request("INSERT INTO {$this->table} ({$list_fields}) VALUES ({$list_splits})", $values);
+    }
+
+    public function hydrate($data): self
+    {
+        foreach ($data as $key => $value)
+        {
+            $setter = "set".ucfirst($key);
+
+            if (method_exists($this, $setter))
+            {
+                $this->$setter($value);
+            }
+        }
+
+        return $this;
+    }
+
+    public function update($model, $id)
+    {
+        $fields = [];
+        $values = [];
+
+        foreach ($model as $field => $value)
+        {
+            $fields[] = "$field = ?";
+            $values[] = "$value";
+        }
+
+        $values[] = $id;
+
+        $list_fields = implode(", ", $fields);
+
+        return $this->request("UPDATE {$this->table} SET {$list_fields} WHERE id = ?", $values);
+    }
+
+    public function delete($id)
+    {
+        return $this->request("DELETE FROM {$this->table} WHERE id = ?", [$id]);
     }
 }

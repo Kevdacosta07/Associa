@@ -10,7 +10,7 @@ Class Db extends \PDO
     private static $instance;
 
     // Constante de connexion à la BDD
-    private const DBHOST = "localhost";
+    private const DBHOST = "127.0.0.1";
     private const DBNAME = "intro_bulma";
     private const DBUSER = "root";
     private const DBPASS = "";
@@ -32,7 +32,7 @@ Class Db extends \PDO
 
         catch (PDOException $e)
         {
-            die("Connexion à la bdd impossible : ".$e->getMessage());
+            die("Connexion à la bdd impossible -> ".$e->getMessage());
         }
     }
 
