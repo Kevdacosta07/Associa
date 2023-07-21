@@ -11,7 +11,7 @@ Class Db extends \PDO
 
     // Constante de connexion à la BDD
     private const DBHOST = "127.0.0.1";
-    private const DBNAME = "intro_bulma";
+    private const DBNAME = "Associa";
     private const DBUSER = "root";
     private const DBPASS = "";
 

@@ -55,7 +55,7 @@ class Model extends Db
         return $req;
     }
 
-    public function findById(int $id)
+    public function findById($id)
     {
         return $this->request("SELECT * FROM {$this->table} WHERE id = ?", [$id])->fetch();
     }
@@ -79,8 +79,6 @@ class Model extends Db
         // On transforme le tableau en chaine de caractères
         $list_fields = implode(", ", $fields);
         $list_splits = implode(", ", $splits);
-
-        echo "Valeur ajoutée !";
 
         return $this->request("INSERT INTO {$this->table} ({$list_fields}) VALUES ({$list_splits})", $values);
     }
@@ -120,6 +118,6 @@ class Model extends Db
 
     public function delete($id)
     {
-        return $this->request("DELETE FROM {$this->table} WHERE id = ?", [$id]);
+        return $this->request("DELETE FROM {$this->table} WHERE id = ?", $id);
     }
 }

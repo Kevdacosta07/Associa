@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
-class MainController
+class MainController extends Controller
 {
     public function index()
     {
-        echo "<h1>Ceci est la page d'accueil</h1>";
+        $title = "Associa | Accueil";
+
+        $this->render("main/index", ["title"=>$title]);
     }
 }
