@@ -18,9 +18,6 @@
 
     <div class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" href="/association">
-                Mon Association
-            </a>
 
             <a class="navbar-item" href="/association/events">
                 Événements
